@@ -1,6 +1,6 @@
 {
     "Title": "Elasticsearch",
-    "Description": "Elasticsearch / customized by www.monitoringartist.com",
+    "Description": "Elasticsearch 1.7 / customized by www.monitoringartist.com",
     "RAMCommitment": "1G",
     "CPUCommitment": 1,
     "Launch": "auto",
