@@ -33,10 +33,10 @@ serviced template compile elasticsearch | serviced template add
 Author
 ======
 
-[Devops Monitoring zExpert](http://www.jangaraj.com 'DevOps / Docker / Zabbix / Zenoss'), who loves monitoring 
+[Devops Monitoring zExpert](http://www.jangaraj.com 'DevOps / Docker / Zabbix / Zenoss / Monitoring'), who loves monitoring 
 systems, which start with letter Z. Those are Zabbix and Zenoss.
 
 Professional monitoring services:
 
 [![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)]
-(http://www.monitoringartist.com 'DevOps / Docker / Zabbix / Zenoss')
+(http://www.monitoringartist.com 'DevOps / Docker / Zabbix / Zenoss / Monitoring')
