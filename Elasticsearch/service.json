@@ -1,0 +1,65 @@
+{
+    "Title": "Elasticsearch",
+    "Description": "Elasticsearch / customized by www.monitoringartist.com",
+    "RAMCommitment": "1G",
+    "CPUCommitment": 1,
+    "Launch": "auto",
+    "Name": "Elasticsearch",
+    "Version": "1.7",
+    "Command": "/usr/share/elasticsearch/bin/elasticsearch",
+    "ConfigFiles": {
+      "/usr/share/elasticsearch/config/elasticsearch.yml": {
+        "FileName": "/usr/share/elasticsearch/config/elasticsearch.yml",
+        "Owner": "root:root",
+        "Permissions": "0664"
+      },
+      "/usr/share/elasticsearch/config/logging.yml": {
+        "FileName": "/usr/share/elasticsearch/config/logging.yml",
+        "Owner": "root:root",
+        "Permissions": "0664"
+      }
+    },
+    "Endpoints": [
+        {
+            "Name": "elasticsearch",
+            "Application": "elasticsearch",
+            "PortNumber": 9200,
+            "Protocol": "tcp",
+            "Purpose": "export",
+            "Vhosts": ["elasticsearch"]
+        },
+        {
+            "Name": "elasticsearch-peer",
+            "Application": "elasticsearch-peer",
+            "PortNumber": 9300,
+            "Protocol": "tcp",
+            "Purpose": "export"
+        },
+        {
+            "Name": "elasticsearch-peers",
+            "Application": "elasticsearch-peer",
+            "PortNumber": 9301,
+            "Protocol": "tcp",
+            "Purpose": "import_all"
+        }
+    ],
+    "HealthChecks": {
+        "cluster_health": {
+            "Script": "curl -s -XGET 'http://localhost:9200/_cluster/health?pretty=true' | grep -q green",
+            "Interval": 10.0
+        }
+    },
+    "ImageID": "elasticsearch:1.7",
+    "Instances": {
+        "min": 1,
+        "default": 3
+    },
+    "Volumes": [
+        {
+            "Owner":         "root:root",
+            "Permission":    "0755",
+            "ResourcePath":  "elasticsearch-cluster",
+            "ContainerPath": "/usr/share/elasticsearch/data"
+        }
+    ]
+}
