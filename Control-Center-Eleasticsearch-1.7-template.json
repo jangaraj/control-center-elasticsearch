@@ -137,8 +137,8 @@
    },
    "TemplateVersion": {
      "branch": "master",
-     "commit": "39133b62abbafdff8cc871ef9c30f5e460bb2701",
-     "repo": "https://github.com/jangaraj/control-center-elasticsearch",
-     "tag": "39133b6"
+     "commit": "ce45f5f27a3c81a0190448bf4e666e3fb2abecee",
+     "repo": "https://github.com/monitoringartist/control-center-elasticsearch",
+     "tag": "ce45f5f"
    }
  }

@@ -27,7 +27,7 @@ Compiling and adding the template
 Add the service template to your Control Center installation:
 
 ```
-serviced template compile elasticsearch | serviced template add
+serviced template compile Elasticsearch | serviced template add
 ```
 
 Author
