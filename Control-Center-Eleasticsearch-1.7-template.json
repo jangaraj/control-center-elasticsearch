@@ -2,14 +2,14 @@
    "ID": "",
    "Name": "Elasticsearch",
    "Version": "1.7",
-   "Description": "Elasticsearch / customized by www.monitoringartist.com",
+   "Description": "Elasticsearch 1.7 / customized by www.monitoringartist.com",
    "Services": [
      {
        "Name": "Elasticsearch",
        "Title": "Elasticsearch",
        "Version": "1.7",
        "Command": "/usr/share/elasticsearch/bin/elasticsearch",
-       "Description": "Elasticsearch / customized by www.monitoringartist.com",
+       "Description": "Elasticsearch 1.7 / customized by www.monitoringartist.com",
        "Tags": null,
        "ImageID": "elasticsearch:1.7",
        "Instances": {
