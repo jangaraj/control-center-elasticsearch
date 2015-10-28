@@ -1,0 +1,144 @@
+{
+   "ID": "",
+   "Name": "Elasticsearch",
+   "Version": "2.0",
+   "Description": "Elasticsearch 2.0 / customized by www.monitoringartist.com",
+   "Services": [
+     {
+       "Name": "Elasticsearch",
+       "Title": "Elasticsearch",
+       "Version": "2.0",
+       "Command": "/usr/share/elasticsearch/bin/elasticsearch",
+       "Description": "Elasticsearch 2.0 / customized by www.monitoringartist.com",
+       "Tags": null,
+       "ImageID": "elasticsearch:2.0",
+       "Instances": {
+         "Min": 1,
+         "Max": 0,
+         "Default": 3
+       },
+       "ChangeOptions": null,
+       "Launch": "auto",
+       "HostPolicy": "",
+       "Hostname": "",
+       "Privileged": false,
+       "ConfigFiles": {
+         "/usr/share/elasticsearch/config/elasticsearch.yml": {
+           "Filename": "/usr/share/elasticsearch/config/elasticsearch.yml",
+           "Owner": "root:root",
+           "Permissions": "0664",
+           "Content": "path:\n    logs: /var/log/elasticsearch\n    data: /usr/share/elasticsearch/data\ntransport:\n    tcp.port: 9300\n    publish_host: 127.0.0.1\n    publish_port: {{ plus 9301 .InstanceID }}\ncluster.name: elasticsearch\ndiscovery.zen.ping:\n    multicast.enabled: false\n    unicast.hosts: [{{ with $esn := .Instances }}{{ range (each $esn) }}\"127.0.0.1:{{ plus 9301 . }}\"{{if ne (plus 1 .) $esn }},{{ end }}{{ end }}{{ end }}]\n"
+         },
+         "/usr/share/elasticsearch/config/logging.yml": {
+           "Filename": "/usr/share/elasticsearch/config/logging.yml",
+           "Owner": "root:root",
+           "Permissions": "0664",
+           "Content": "# you can override this using by setting a system property, for example -Des.logger.level=DEBUG\nes.logger.level: INFO\nrootLogger: ${es.logger.level}, console, file\nlogger:\n  # log action execution errors for easier debugging\n  action: DEBUG\n  # reduce the logging for aws, too much is logged under the default INFO\n  com.amazonaws: WARN\n\n  # gateway\n  #gateway: DEBUG\n  #index.gateway: DEBUG\n\n  # peer shard recovery\n  #indices.recovery: DEBUG\n\n  # discovery\n  discovery: TRACE\n\n  index.search.slowlog: TRACE, index_search_slow_log_file\n  index.indexing.slowlog: TRACE, index_indexing_slow_log_file\n\nadditivity:\n  index.search.slowlog: false\n  index.indexing.slowlog: false\n\nappender:\n  console:\n    type: console\n    layout:\n      type: consolePattern\n      conversionPattern: \"[%d{ISO8601}][%-5p][%-25c] %m%n\"\n\n  file:\n    type: dailyRollingFile\n    file: ${path.logs}/${cluster.name}.log\n    datePattern: \"'.'yyyy-MM-dd\"\n    layout:\n      type: pattern\n      conversionPattern: \"[%d{ISO8601}][%-5p][%-25c] %m%n\"\n\n  index_search_slow_log_file:\n    type: dailyRollingFile\n    file: ${path.logs}/${cluster.name}_index_search_slowlog.log\n    datePattern: \"'.'yyyy-MM-dd\"\n\n  index_indexing_slow_log_file:\n    type: dailyRollingFile\n    file: ${path.logs}/${cluster.name}_index_indexing_slowlog.log\n    datePattern: \"'.'yyyy-MM-dd\"\n    layout:\n      type: pattern\n      conversionPattern: \"[%d{ISO8601}][%-5p][%-25c] %m%n\""
+         }
+       },
+       "Context": null,
+       "Endpoints": [
+         {
+           "Name": "elasticsearch",
+           "Purpose": "export",
+           "Protocol": "tcp",
+           "PortNumber": 9200,
+           "PortTemplate": "",
+           "VirtualAddress": "",
+           "Application": "elasticsearch",
+           "ApplicationTemplate": "",
+           "AddressConfig": {
+             "Port": 0,
+             "Protocol": ""
+           },
+           "VHosts": [
+             "elasticsearch"
+           ]
+         },
+         {
+           "Name": "elasticsearch-peer",
+           "Purpose": "export",
+           "Protocol": "tcp",
+           "PortNumber": 9300,
+           "PortTemplate": "",
+           "VirtualAddress": "",
+           "Application": "elasticsearch-peer",
+           "ApplicationTemplate": "",
+           "AddressConfig": {
+             "Port": 0,
+             "Protocol": ""
+           },
+           "VHosts": null
+         },
+         {
+           "Name": "elasticsearch-peers",
+           "Purpose": "import_all",
+           "Protocol": "tcp",
+           "PortNumber": 9301,
+           "PortTemplate": "",
+           "VirtualAddress": "",
+           "Application": "elasticsearch-peer",
+           "ApplicationTemplate": "",
+           "AddressConfig": {
+             "Port": 0,
+             "Protocol": ""
+           },
+           "VHosts": null
+         }
+       ],
+       "Services": [],
+       "Tasks": null,
+       "LogFilters": null,
+       "Volumes": [
+         {
+           "Owner": "root:root",
+           "Permission": "0755",
+           "ResourcePath": "elasticsearch-cluster",
+           "ContainerPath": "/usr/share/elasticsearch/data",
+           "Type": ""
+         }
+       ],
+       "LogConfigs": null,
+       "Snapshot": {
+         "Pause": "",
+         "Resume": ""
+       },
+       "RAMCommitment": "1G",
+       "CPUCommitment": 1,
+       "Runs": null,
+       "Actions": null,
+       "HealthChecks": {
+         "cluster_health": {
+           "Script": "curl -s -XGET 'http://localhost:9200/_cluster/health?pretty=true' | grep -q green",
+           "Interval": 10,
+           "Timeout": 0
+         }
+       },
+       "Prereqs": null,
+       "MonitoringProfile": {
+         "MetricConfigs": null,
+         "GraphConfigs": null,
+         "ThresholdConfigs": null
+       },
+       "MemoryLimit": 0,
+       "CPUShares": 0,
+       "PIDFile": ""
+     }
+   ],
+   "ConfigFiles": null,
+   "ServicedVersion": {
+     "Version": "1.0.7",
+     "Date": "Wed Oct  7 06:39:55 UTC 2015",
+     "Gitbranch": "HEAD",
+     "Gitcommit": "9141bcd",
+     "Giturl": "",
+     "Buildtag": "jenkins-serviced-1.0.x-build-257",
+     "Release": "1.0.7-1"
+   },
+   "TemplateVersion": {
+     "branch": "master",
+     "commit": "ce45f5f27a3c81a0190448bf4e666e3fb2abecee",
+     "repo": "https://github.com/monitoringartist/control-center-elasticsearch",
+     "tag": "ce45f5f"
+   }
+ }
