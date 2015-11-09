@@ -30,6 +30,18 @@ Add the service template to your Control Center installation:
 serviced template compile Elasticsearch | serviced template add
 ```
 
+Troubleshooting
+===============
+
+Check if app is running:
+
+```
+[ccuser@ccmaster]# curl -sk --header 'Host: elasticsearch.local' 'https://127.0.0.1:443/_cluster/health?pretty=true' | grep status
+  "status" : "green",
+```
+
+If you can see this output in command line '"status" : "green",' and you are not able to see app in your browser, then you have some problem with DNS records/hosts file.
+
 Author
 ======
 
